@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hanwen Chen</title>
+  <meta name="description" content="Hanwen Chen — M.S. ECE student at UC Santa Cruz working on robot manipulation, perception, and real-time AI systems.">
+  <meta property="og:title" content="Hanwen Chen">
+  <meta property="og:description" content="Robotics, perception, and real-time AI systems. M.S. ECE @ UC Santa Cruz.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fbfaf7;
+      --surface: #ffffff;
+      --text: #1c1c1a;
+      --muted: #5f5e59;
+      --faint: #8a8983;
+      --line: #e6e3dc;
+      --accent: #1f5c4a;
+      --accent-soft: #e7f0ec;
+      --chip: #f1efe9;
+      --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #141513;
+        --surface: #1b1c1a;
+        --text: #ebe9e3;
+        --muted: #a9a79f;
+        --faint: #7d7b74;
+        --line: #2c2d2a;
+        --accent: #7cc4a8;
+        --accent-soft: #1d2b26;
+        --chip: #232421;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #141513;
+      --surface: #1b1c1a;
+      --text: #ebe9e3;
+      --muted: #a9a79f;
+      --faint: #7d7b74;
+      --line: #2c2d2a;
+      --accent: #7cc4a8;
+      --accent-soft: #1d2b26;
+      --chip: #232421;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.65 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    nav .brand { font-family: var(--serif); font-weight: 600; font-size: 18px; color: var(--text); }
+    nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font-size: 14px; }
+    nav ul a { color: var(--muted); }
+    nav ul a:hover { color: var(--text); text-decoration: none; }
+    .theme-btn {
+      background: none; border: 1px solid var(--line); color: var(--muted);
+      width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+      display: inline-grid; place-items: center; margin-left: 16px;
+    }
+    .theme-btn:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; }
+
+    /* Hero */
+    header.hero { padding: 72px 0 40px; }
+    .hero h1 {
+      font-family: var(--serif); font-weight: 600;
+      font-size: clamp(36px, 6vw, 50px); line-height: 1.1; margin: 0 0 12px; letter-spacing: -0.01em;
+    }
+    .hero .role { font-size: 18px; color: var(--muted); margin: 0 0 22px; }
+    .hero .bio { font-size: 17px; max-width: 640px; margin: 0 0 28px; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 500;
+      border: 1px solid var(--line); background: var(--surface); color: var(--text);
+    }
+    .btn:hover { border-color: var(--accent); text-decoration: none; }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .btn svg { width: 16px; height: 16px; flex: none; }
+
+    /* Sections */
+    section { padding: 36px 0; border-top: 1px solid var(--line); scroll-margin-top: 56px; }
+    section h2 {
+      font-family: var(--serif); font-weight: 600; font-size: 26px; margin: 0 0 24px;
+    }
+
+    .item { margin-bottom: 30px; }
+    .item:last-child { margin-bottom: 0; }
+    .item-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
+    .item-title { font-weight: 600; font-size: 17px; margin: 0; }
+    .item-date { color: var(--faint); font-size: 14px; white-space: nowrap; }
+    .item-sub { color: var(--muted); margin: 2px 0 10px; font-size: 15px; }
+    ul.points { margin: 0; padding-left: 20px; }
+    ul.points li { margin-bottom: 6px; }
+    ul.points li::marker { color: var(--faint); }
+
+    /* Project cards */
+    .cards { display: grid; gap: 16px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+      padding: 20px 22px;
+    }
+    .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+    .card h3 { margin: 0; font-size: 17px; font-weight: 600; }
+    .card .meta { color: var(--faint); font-size: 14px; margin: 0 0 10px; }
+    .card p { margin: 0 0 12px; }
+    .stat-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 14px; }
+    .stat {
+      background: var(--accent-soft); color: var(--accent);
+      font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: var(--chip); color: var(--muted); font-size: 12.5px; padding: 2px 9px; border-radius: 6px; }
+    .gh { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
+    .gh svg { width: 15px; height: 15px; }
+
+    /* Skills */
+    .skills { display: grid; grid-template-columns: 170px 1fr; gap: 12px 20px; }
+    .skills dt { font-weight: 600; font-size: 15px; }
+    .skills dd { margin: 0; color: var(--muted); }
+
+    footer { padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--faint); font-size: 14px; }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      header.hero { padding: 48px 0 32px; }
+      .skills { grid-template-columns: 1fr; gap: 2px; }
+      .skills dd { margin-bottom: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#">Hanwen Chen</a>
+      <div class="nav-right">
+        <ul>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#education">Education</a></li>
+        </ul>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <h1>Hanwen Chen</h1>
+      <p class="role">M.S. Electrical &amp; Computer Engineering · UC Santa Cruz</p>
+      <p class="bio">
+        I build systems that connect perception to action: robot manipulation driven by RGB-D vision,
+        and real-time AI pipelines that stream speech, language, and animation with low latency.
+        I'm a graduate researcher in the Tactile Manipulation Lab at UC Santa Cruz, working on
+        autonomous tomato seedling transplantation with a Franka Research 3 arm.
+      </p>
+      <div class="links">
+        <a class="btn primary" href="mailto:kevinchen6324@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email
+        </a>
+        <a class="btn" href="https://github.com/Kiyoakiiii" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/hanwen-chen/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn" href="files/Hanwen_Chen_Robotics.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          CV · Robotics
+        </a>
+        <a class="btn" href="files/Hanwen_Chen_AI_Systems.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          CV · AI Systems
+        </a>
+      </div>
+    </header>
+
+    <section id="research">
+      <h2>Research</h2>
+      <div class="item">
+        <div class="item-head">
+          <p class="item-title">Tactile Manipulation Lab, UC Santa Cruz</p>
+          <span class="item-date">Sep 2025 – Present</span>
+        </div>
+        <p class="item-sub">Graduate Researcher · Autonomous Tomato Seedling Transplantation</p>
+        <ul class="points">
+          <li>Building an end-to-end Python pipeline from ZED 2i RGB-D capture to a <strong>Franka Research 3</strong>, demonstrating stem-based acquisition, tray extraction, transport, and placement in initial end-to-end trials.</li>
+          <li>Annotated main-stem instance masks on <strong>200+ RGB-D images</strong> with plant/session-level splits to prevent leakage; fine-tuned an <strong>Ultralytics YOLO</strong> segmentation model and skeletonized masks into centerlines to pick long, low-curvature grasp segments.</li>
+          <li>Recovered 3D stem position and tangent from point clouds with confidence and depth-discontinuity filtering followed by <strong>RANSAC + PCA</strong> line fitting; converted results to robot-frame grasp poses using calibrated camera-to-base transforms.</li>
+          <li>Generated side-approach grasp candidates filtered by workspace, <strong>inverse kinematics</strong>, and gripper–tray clearance, ranked by depth quality and capture tolerance.</li>
+          <li>Implemented a fault-tolerant task <strong>state machine</strong> over franky/libfranka (observe → validate → pre-grasp → acquire → extract → transport → place → recover) with wrench-based contact detection, re-observation, bounded retries, and retreat.</li>
+          <li>Measured gripper capture tolerance under controlled 3-axis offsets, separating holding failures from extraction resistance, to set localization accuracy requirements for the perception stack.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-head">
+            <h3>Real-Time Conversational Digital Human</h3>
+            <a class="gh" href="https://github.com/Kiyoakiiii/digital-human" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+              Code
+            </a>
+          </div>
+          <p class="meta">Zentek · Systems Engineering Intern · Jun – Dec 2024</p>
+          <p>A voice-driven 3D avatar that listens, thinks, and talks back in real time. A FastAPI service orchestrates Riva ASR, a streaming LLM, GPT-SoVITS TTS, and Audio2Face over WebSocket, REST, and gRPC. LLM tokens are split into sentences on the fly and fed to concurrent TTS and facial-animation workers, so the avatar starts speaking before the full reply is ready.</p>
+          <div class="stat-row">
+            <span class="stat">−60% perceived latency</span>
+            <span class="stat">60 FPS avatar</span>
+            <span class="stat">52 ARKit blendshapes</span>
+          </div>
+          <div class="tags">
+            <span class="tag">FastAPI</span><span class="tag">asyncio</span><span class="tag">WebSockets</span><span class="tag">gRPC</span>
+            <span class="tag">NVIDIA Riva</span><span class="tag">GPT-SoVITS</span><span class="tag">Audio2Face</span>
+            <span class="tag">React Three Fiber</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>IMU-Driven Digital Twin</h3>
+            <a class="gh" href="https://github.com/Kiyoakiiii/processing-IMU-data-in-Omniverse" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+              Code
+            </a>
+          </div>
+          <p class="meta">Zentek · Systems Engineering Intern · 2024</p>
+          <p>A physical sensor mirrored live in a 3D scene. An MPU6050 on a Jetson Orin Nano is sampled over I2C; roll, pitch, and yaw are estimated with Kalman filtering and gravity is removed from acceleration. Data streams over HTTP into OpenUSD transforms shared through Omniverse Nucleus Live sessions.</p>
+          <div class="stat-row">
+            <span class="stat">100 Hz sampling</span>
+            <span class="stat">&lt; 2° orientation error</span>
+            <span class="stat">&lt; 100 ms scene latency</span>
+          </div>
+          <div class="tags">
+            <span class="tag">Jetson Orin Nano</span><span class="tag">Kalman filter</span><span class="tag">I2C</span>
+            <span class="tag">NVIDIA Omniverse</span><span class="tag">OpenUSD</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <dt>Languages &amp; tools</dt>
+        <dd>Python, C++, JavaScript, Bash, Linux, Git</dd>
+        <dt>Robotics</dt>
+        <dd>Franka Research 3, franky/libfranka, camera-to-robot calibration, rigid-body transforms, inverse kinematics, grasp planning, state machines, Kalman filtering</dd>
+        <dt>Perception &amp; ML</dt>
+        <dd>PyTorch, Ultralytics YOLO, OpenCV, scikit-image, ZED SDK, Open3D, NumPy/SciPy, RANSAC/PCA</dd>
+        <dt>Backend &amp; systems</dt>
+        <dd>FastAPI, asyncio, multithreading, WebSockets, REST, gRPC, Flask, FFmpeg</dd>
+        <dt>Speech &amp; generative AI</dt>
+        <dd>Streaming LLM APIs, NVIDIA Riva ASR, GPT-SoVITS, NVIDIA Audio2Face</dd>
+        <dt>3D, simulation &amp; hardware</dt>
+        <dd>React, Three.js, GLTF, NVIDIA Omniverse Kit, OpenUSD, Onshape, SolidWorks, 3D printing, Jetson Orin</dd>
+      </dl>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="item">
+        <div class="item-head">
+          <p class="item-title">University of California, Santa Cruz</p>
+          <span class="item-date">Expected Dec 2026</span>
+        </div>
+        <p class="item-sub">M.S. in Electrical and Computer Engineering</p>
+      </div>
+      <div class="item">
+        <div class="item-head">
+          <p class="item-title">Shanghai University</p>
+          <span class="item-date">Jun 2025</span>
+        </div>
+        <p class="item-sub">B.E. in Electronic Information Engineering</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Based in San Jose, CA · Open to relocation ·
+      <a href="mailto:kevinchen6324@gmail.com">kevinchen6324@gmail.com</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved) root.setAttribute('data-theme', saved);
+      } catch (e) {}
+      document.getElementById('themeBtn').addEventListener('click', function () {
+        var current = root.getAttribute('data-theme') ||
+          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        var next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>
