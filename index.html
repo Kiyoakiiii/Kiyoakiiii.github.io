@@ -9,303 +9,333 @@
   <meta property="og:description" content="Robot manipulation, RGB-D perception, and real-time AI systems. M.S. ECE @ UC Santa Cruz.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kiyoakiiii.github.io/">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f6f54'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EHC%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23b5502f'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-style='italic' text-anchor='middle' fill='%23fbf9f4'%3EH%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fafaf9;
-      --surface: #ffffff;
-      --text: #18181b;
-      --muted: #57575e;
-      --faint: #8b8b93;
-      --line: #e7e5e4;
-      --accent: #1f6f54;
-      --chip: #f4f4f2;
+      --bg: #f8f6f1;
+      --card: #fffdf9;
+      --ink: #1d1b18;
+      --body: #4a463f;
+      --muted: #85807a;
+      --line: #e6e1d8;
+      --accent: #b5502f;
+      --accent-soft: #f5e6de;
+      --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
       --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg: #111312;
-        --surface: #171a19;
-        --text: #e9ebea;
-        --muted: #a3aaa6;
-        --faint: #747b77;
-        --line: #262b29;
-        --accent: #5cc49b;
-        --chip: #1e2221;
+        --bg: #161513;
+        --card: #1d1c19;
+        --ink: #f0ece5;
+        --body: #b9b3a9;
+        --muted: #7f7a72;
+        --line: #2b2925;
+        --accent: #e58b66;
+        --accent-soft: #33241d;
       }
     }
     :root[data-theme="dark"] {
-      --bg: #111312;
-      --surface: #171a19;
-      --text: #e9ebea;
-      --muted: #a3aaa6;
-      --faint: #747b77;
-      --line: #262b29;
-      --accent: #5cc49b;
-      --chip: #1e2221;
+      --bg: #161513;
+      --card: #1d1c19;
+      --ink: #f0ece5;
+      --body: #b9b3a9;
+      --muted: #7f7a72;
+      --line: #2b2925;
+      --accent: #e58b66;
+      --accent-soft: #33241d;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      margin: 0; background: var(--bg); color: var(--text);
-      font: 16px/1.7 var(--sans); -webkit-font-smoothing: antialiased;
+      margin: 0; background: var(--bg); color: var(--body);
+      font: 15.5px/1.7 var(--sans); -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; text-underline-offset: 3px; }
-    .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    ::selection { background: var(--accent-soft); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    strong { color: var(--ink); font-weight: 500; }
 
-    /* Nav */
-    nav {
-      position: sticky; top: 0; z-index: 10;
-      background: color-mix(in srgb, var(--bg) 90%, transparent);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--line);
+    .page {
+      max-width: 1120px; margin: 0 auto; padding: 0 48px;
+      display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px;
     }
-    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 58px; }
-    .brand { font-weight: 600; color: var(--text); }
-    .brand:hover { text-decoration: none; }
-    .nav-right { display: flex; align-items: center; gap: 22px; }
-    nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font-size: 14px; }
-    nav ul a { color: var(--muted); }
-    nav ul a:hover { color: var(--text); text-decoration: none; }
-    .icon-btn {
-      background: none; border: 1px solid var(--line); color: var(--muted);
-      width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
-      display: inline-grid; place-items: center;
+
+    /* ---------- Left column ---------- */
+    .side {
+      position: sticky; top: 0; height: 100vh; height: 100svh;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 88px 0 56px;
     }
-    .icon-btn:hover { color: var(--text); }
-    .icon-btn svg { width: 15px; height: 15px; }
-
-    /* Hero */
-    .hero {
-      display: grid; grid-template-columns: 1fr 260px; gap: 40px; align-items: center;
-      padding: 80px 0 64px;
+    .side h1 {
+      font-family: var(--serif); font-weight: 400; color: var(--ink);
+      font-size: clamp(48px, 5.4vw, 66px); line-height: 1; letter-spacing: -0.01em; margin: 0 0 14px;
     }
-    .hero h1 { font-size: clamp(38px, 6vw, 52px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 10px; }
-    .hero .role { color: var(--muted); font-size: 17px; margin: 0 0 22px; }
-    .hero .bio { font-size: 17px; margin: 0 0 28px; max-width: 540px; }
-    .links { display: flex; flex-wrap: wrap; gap: 10px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 500;
-      border: 1px solid var(--line); background: var(--surface); color: var(--text);
-      transition: border-color .15s;
+    .side .role { color: var(--ink); font-size: 17px; font-weight: 500; margin: 0 0 14px; }
+    .side .tagline { max-width: 330px; margin: 0; }
+    .side .tagline em { font-family: var(--serif); font-size: 1.22em; color: var(--accent); font-style: italic; }
+
+    .toc { list-style: none; margin: 56px 0 0; padding: 0; }
+    .toc a {
+      display: inline-flex; align-items: center; gap: 14px; padding: 7px 0;
+      font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+      transition: color .2s;
     }
-    .btn:hover { border-color: var(--accent); text-decoration: none; }
-    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-    :root[data-theme="dark"] .btn.primary { color: #0d1a15; }
-    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #0d1a15; } }
-    .btn svg { width: 15px; height: 15px; flex: none; }
-    .viz { width: 100%; aspect-ratio: 1 / 1; }
-    .viz canvas { width: 100%; height: 100%; display: block; }
-
-    /* Sections */
-    section { padding: 48px 0; border-top: 1px solid var(--line); scroll-margin-top: 58px; }
-    h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 28px; }
-    .date { font-family: var(--mono); font-size: 13px; color: var(--faint); white-space: nowrap; }
-    .head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-    h3 { font-size: 17px; font-weight: 600; margin: 0; }
-    .sub { color: var(--muted); margin: 2px 0 0; font-size: 15px; }
-
-    /* Research pipeline */
-    .pipeline {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-      margin: 22px 0 22px; font-size: 13.5px;
+    .toc a::before {
+      content: ""; width: 28px; height: 1px; background: currentColor; opacity: .6;
+      transition: width .25s ease, opacity .25s;
     }
-    .pipeline span { background: var(--chip); border: 1px solid var(--line); padding: 4px 10px; border-radius: 6px; }
-    .pipeline i { color: var(--faint); font-style: normal; }
+    .toc a:hover, .toc a.active { color: var(--ink); }
+    .toc a:hover::before, .toc a.active::before { width: 60px; opacity: 1; }
 
-    ul.points { margin: 0; padding-left: 20px; }
-    ul.points li { margin-bottom: 8px; color: var(--muted); }
-    ul.points li::marker { color: var(--faint); }
-    ul.points strong { color: var(--text); font-weight: 500; }
+    .side-foot { display: flex; align-items: center; gap: 18px; }
+    .social { display: flex; gap: 18px; }
+    .social a { color: var(--muted); transition: color .2s, transform .2s; display: inline-flex; }
+    .social a:hover { color: var(--ink); transform: translateY(-2px); }
+    .social svg { width: 21px; height: 21px; }
+    .cv-link {
+      margin-left: 6px; font-size: 13.5px; font-weight: 500; color: var(--ink);
+      border: 1px solid var(--line); background: var(--card);
+      padding: 6px 14px; border-radius: 999px; transition: border-color .2s, color .2s;
+    }
+    .cv-link:hover { border-color: var(--accent); color: var(--accent); }
+    .theme {
+      margin-left: auto; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 4px;
+      display: inline-flex;
+    }
+    .theme:hover { color: var(--ink); }
+    .theme svg { width: 18px; height: 18px; }
 
-    /* Projects */
-    .project { padding: 24px 0; border-bottom: 1px solid var(--line); }
-    .project:first-of-type { padding-top: 0; }
-    .project:last-child { border-bottom: 0; padding-bottom: 0; }
-    .project p.desc { margin: 10px 0 12px; color: var(--muted); }
-    .nums { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 12px; font-size: 14px; }
-    .nums b { color: var(--accent); font-weight: 600; }
-    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { font-size: 12.5px; color: var(--muted); background: var(--chip); padding: 2px 9px; border-radius: 6px; }
-    .src { font-size: 14px; display: inline-flex; align-items: center; gap: 5px; }
-    .src svg { width: 14px; height: 14px; }
+    /* ---------- Right column ---------- */
+    main { padding: 88px 0 72px; }
+    section { margin-bottom: 104px; scroll-margin-top: 72px; }
+    .label {
+      display: none; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink); margin: 0 0 20px;
+    }
+    #about p { margin: 0 0 16px; font-size: 16.5px; }
+    #about p:last-child { margin-bottom: 0; }
+    #about a, .inline-link { color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--accent); transition: color .2s; }
+    #about a:hover, .inline-link:hover { color: var(--accent); }
+
+    /* Entries */
+    .entry {
+      position: relative; display: grid; grid-template-columns: 112px 1fr; gap: 20px;
+      padding: 22px 24px; margin: 0 -24px 8px; border-radius: 12px;
+      transition: background .25s, box-shadow .25s;
+    }
+    .entry:hover { background: var(--card); box-shadow: 0 1px 0 var(--line), 0 0 0 1px var(--line); }
+    .when {
+      font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); padding-top: 4px; line-height: 1.5;
+    }
+    .entry h3 { margin: 0; font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+    .entry h3 a { display: inline-flex; align-items: baseline; gap: 6px; transition: color .2s; }
+    .entry h3 a::after { content: ""; position: absolute; inset: 0; border-radius: 12px; }
+    .entry:hover h3 a { color: var(--accent); }
+    .entry h3 .arrow { display: inline-block; font-size: 14px; transition: transform .2s; }
+    .entry:hover h3 .arrow { transform: translate(2px, -2px); }
+    .entry .org { margin: 2px 0 10px; color: var(--muted); font-size: 14.5px; }
+    .entry p { margin: 0 0 12px; }
+    .entry ul { margin: 0 0 14px; padding-left: 18px; }
+    .entry li { margin-bottom: 6px; }
+    .entry li::marker { color: var(--accent); }
+
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0 0 14px; font-size: 13px; color: var(--ink); }
+    .flow i { font-style: normal; color: var(--accent); }
+
+    .metrics { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 14px; font-size: 13.5px; color: var(--muted); }
+    .metrics b { font-family: var(--serif); font-weight: 400; font-size: 21px; color: var(--ink); margin-right: 4px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; position: relative; }
+    .tag {
+      font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-soft);
+      padding: 3px 11px; border-radius: 999px;
+    }
 
     /* Skills */
-    .skills { display: grid; grid-template-columns: 180px 1fr; gap: 10px 24px; margin: 0; }
-    .skills dt { font-weight: 500; font-size: 15px; }
-    .skills dd { margin: 0; color: var(--muted); }
+    .skills { display: grid; gap: 18px; }
+    .skill { display: grid; grid-template-columns: 112px 1fr; gap: 20px; }
+    .skill h4 { margin: 0; font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+    .skill p { margin: 0; }
 
-    .edu + .edu { margin-top: 18px; }
+    footer { font-size: 13.5px; color: var(--muted); max-width: 440px; }
+    footer a { color: var(--ink); font-weight: 500; }
+    footer a:hover { color: var(--accent); }
 
-    footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--faint); font-size: 14px; }
-    footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-
-    @media (max-width: 720px) {
-      .hero { grid-template-columns: 1fr; padding: 48px 0 40px; gap: 8px; }
-      .viz { order: -1; width: 180px; }
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px) {
+      .page { grid-template-columns: 1fr; gap: 0; padding: 0 28px; max-width: 680px; }
+      .side { position: static; height: auto; padding: 72px 0 8px; }
+      .toc { display: none; }
+      .side-foot { margin-top: 32px; }
+      main { padding-top: 64px; }
+      section { margin-bottom: 72px; }
+      .label {
+        display: block; position: sticky; top: 0; z-index: 5;
+        margin: 0 -28px 16px; padding: 14px 28px;
+        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      }
     }
-    @media (max-width: 600px) {
-      .wrap { padding: 0 16px; }
-      nav ul { display: none; }
-      .skills { grid-template-columns: 1fr; gap: 0; }
-      .skills dd { margin-bottom: 12px; }
+    @media (max-width: 560px) {
+      .page { padding: 0 18px; }
+      .label { margin: 0 -18px 12px; padding: 14px 18px; }
+      .side { padding-top: 56px; }
+      .entry, .skill { grid-template-columns: 1fr; gap: 4px; }
+      .entry { padding: 16px 0; margin: 0 0 8px; }
+      .entry:hover { background: none; box-shadow: none; }
+      .when { padding-top: 0; }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="wrap">
-      <a class="brand" href="#">Hanwen Chen</a>
-      <div class="nav-right">
-        <ul>
-          <li><a href="#research">Research</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="files/Hanwen_Chen_CV.pdf" target="_blank" rel="noopener">CV</a></li>
-        </ul>
-        <button class="icon-btn" id="themeBtn" aria-label="Toggle light/dark theme" title="Toggle theme">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <main class="wrap">
-    <header class="hero">
+  <div class="page">
+    <header class="side">
       <div>
         <h1>Hanwen Chen</h1>
-        <p class="role">M.S. Electrical &amp; Computer Engineering · UC Santa Cruz</p>
-        <p class="bio">
-          I work on robot manipulation and RGB-D perception, and on real-time AI systems.
-          Currently a graduate researcher in the Tactile Manipulation Lab, building an autonomous
-          tomato seedling transplanting system on a Franka Research 3.
-        </p>
-        <div class="links">
-          <a class="btn primary" href="mailto:kevinchen6324@gmail.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-            Email
-          </a>
-          <a class="btn" href="files/Hanwen_Chen_CV.pdf" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
-            CV
-          </a>
-          <a class="btn" href="https://github.com/Kiyoakiiii" target="_blank" rel="noopener">
+        <p class="role">Robotics &amp; Perception · UC Santa Cruz</p>
+        <p class="tagline">I build robots that <em>see</em> and <em>grasp</em>, and real-time AI systems that <em>talk back</em>.</p>
+
+        <nav>
+          <ul class="toc">
+            <li><a href="#about">About</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#education">Education</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="side-foot">
+        <div class="social">
+          <a href="https://github.com/Kiyoakiiii" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
-            GitHub
           </a>
-          <a class="btn" href="https://www.linkedin.com/in/hanwen-chen/" target="_blank" rel="noopener">
+          <a href="https://www.linkedin.com/in/hanwen-chen/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-            LinkedIn
+          </a>
+          <a href="mailto:kevinchen6324@gmail.com" aria-label="Email" title="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
           </a>
         </div>
+        <a class="cv-link" href="files/Hanwen_Chen_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <button class="theme" id="themeBtn" aria-label="Toggle light/dark theme" title="Toggle theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
+        </button>
       </div>
-      <div class="viz" aria-hidden="true"><canvas id="cloud"></canvas></div>
     </header>
 
-    <section id="research">
-      <h2>Research</h2>
-      <div class="head">
-        <h3>Autonomous Tomato Seedling Transplantation</h3>
-        <span class="date">Sep 2025 – Present</span>
-      </div>
-      <p class="sub">Graduate Researcher · Tactile Manipulation Lab, UC Santa Cruz</p>
+    <main>
+      <section id="about">
+        <h2 class="label">About</h2>
+        <p>
+          I'm an M.S. student in Electrical and Computer Engineering at <strong>UC Santa Cruz</strong>, where I'm a
+          graduate researcher in the <strong>Tactile Manipulation Lab</strong>. My current work is teaching a
+          Franka Research 3 arm to transplant tomato seedlings: finding a thin, flexible stem in an RGB-D
+          point cloud and grasping it reliably.
+        </p>
+        <p>
+          Before that, as a systems engineering intern at <strong>Zentek</strong>, I built a real-time conversational
+          digital human and an IMU-driven digital twin in NVIDIA Omniverse. I care about the full loop from sensing to
+          action, and about pipelines that stay fast and recover gracefully when things go wrong.
+        </p>
+        <p>
+          I'm based in San Jose, CA and open to relocation. Feel free to
+          <a href="mailto:kevinchen6324@gmail.com">reach out</a>.
+        </p>
+      </section>
 
-      <div class="pipeline">
-        <span>RGB-D capture</span><i>→</i>
-        <span>Stem segmentation</span><i>→</i>
-        <span>3D line fitting</span><i>→</i>
-        <span>Grasp planning</span><i>→</i>
-        <span>Franka FR3 execution</span>
-      </div>
-
-      <ul class="points">
-        <li>Demonstrated <strong>stem-based acquisition, tray extraction, transport, and placement</strong> in initial end-to-end trials on a Franka Research 3 with a fixed ZED 2i camera.</li>
-        <li>Annotated main-stem instance masks on <strong>200+ RGB-D images</strong> with plant/session-level splits to prevent leakage; fine-tuned an <strong>Ultralytics YOLO</strong> segmentation model and skeletonized masks to select long, low-curvature grasp segments.</li>
-        <li>Recovered 3D stem position and tangent from point clouds, filtering low-confidence and depth-discontinuity pixels before <strong>RANSAC + PCA</strong> line fitting.</li>
-        <li>Calibrated camera-to-base and tool-to-contact transforms; generated side-approach grasps filtered by workspace, <strong>inverse kinematics</strong>, and gripper–tray clearance.</li>
-        <li>Built a Python <strong>state machine</strong> over franky/libfranka with bounded motion limits, wrench-based contact detection, re-observation, bounded retries, and retreat.</li>
-        <li>Measured gripper capture tolerance under controlled 3-axis offsets to set <strong>localization requirements</strong> for the perception stack.</li>
-      </ul>
-    </section>
-
-    <section id="projects">
-      <h2>Projects</h2>
-
-      <article class="project">
-        <div class="head">
-          <h3>Real-Time Conversational Digital Human</h3>
-          <a class="src" href="https://github.com/Kiyoakiiii/digital-human" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
-            GitHub
-          </a>
+      <section id="research">
+        <h2 class="label">Research</h2>
+        <div class="entry">
+          <div class="when">Sep 2025 —<br>Present</div>
+          <div>
+            <h3>Autonomous Tomato Seedling Transplantation</h3>
+            <p class="org">Graduate Researcher · Tactile Manipulation Lab, UC Santa Cruz</p>
+            <div class="flow">
+              <span>RGB-D capture</span><i>→</i><span>stem segmentation</span><i>→</i><span>3D line fit</span><i>→</i><span>grasp planning</span><i>→</i><span>execution</span>
+            </div>
+            <ul>
+              <li>Demonstrated <strong>stem-based acquisition, tray extraction, transport, and placement</strong> in initial end-to-end trials on a Franka Research 3 with a fixed ZED 2i camera.</li>
+              <li>Annotated <strong>200+ RGB-D images</strong> with plant/session-level splits to prevent leakage; fine-tuned a <strong>YOLO</strong> segmentation model and skeletonized masks to pick long, low-curvature grasp segments.</li>
+              <li>Recovered 3D stem position and tangent with confidence filtering and <strong>RANSAC + PCA</strong> line fitting; generated grasps filtered by workspace, <strong>inverse kinematics</strong>, and gripper–tray clearance.</li>
+              <li>Built a fault-tolerant <strong>state machine</strong> over franky/libfranka with wrench-based contact detection, re-observation, bounded retries, and retreat.</li>
+              <li>Measured gripper capture tolerance under controlled 3-axis offsets to set localization requirements for perception.</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">Franka FR3</span><span class="tag">ZED SDK</span><span class="tag">YOLO</span><span class="tag">OpenCV</span><span class="tag">Open3D</span>
+            </div>
+          </div>
         </div>
-        <p class="sub">Zentek · Systems Engineering Intern · Jun – Dec 2024</p>
-        <p class="desc">A voice-driven 3D avatar that converses in real time. A FastAPI service links Riva ASR, a streaming LLM, GPT-SoVITS, and Audio2Face; sentence-level streaming lets the avatar start speaking before the full reply is ready.</p>
-        <div class="nums"><span><b>−60%</b> perceived latency</span><span><b>60 FPS</b> rendering</span><span><b>52</b> ARKit blendshapes</span></div>
-        <div class="tags">
-          <span class="tag">FastAPI</span><span class="tag">asyncio</span><span class="tag">WebSocket</span><span class="tag">gRPC</span>
-          <span class="tag">Riva ASR</span><span class="tag">GPT-SoVITS</span><span class="tag">Audio2Face</span><span class="tag">Three.js</span>
+      </section>
+
+      <section id="projects">
+        <h2 class="label">Projects</h2>
+        <div class="entry">
+          <div class="when">2024</div>
+          <div>
+            <h3><a href="https://github.com/Kiyoakiiii/digital-human" target="_blank" rel="noopener">Real-Time Conversational Digital Human <span class="arrow">↗</span></a></h3>
+            <p class="org">Zentek · Systems Engineering Intern</p>
+            <p>A voice-driven 3D avatar that converses in real time. A FastAPI service links Riva ASR, a streaming LLM, GPT-SoVITS, and Audio2Face; sentence-level streaming lets the avatar start speaking before the full reply is ready.</p>
+            <div class="metrics"><span><b>60%</b>lower perceived latency</span><span><b>60</b>FPS avatar</span></div>
+            <div class="tags">
+              <span class="tag">FastAPI</span><span class="tag">asyncio</span><span class="tag">WebSocket</span><span class="tag">gRPC</span><span class="tag">Audio2Face</span><span class="tag">Three.js</span>
+            </div>
+          </div>
         </div>
-      </article>
-
-      <article class="project">
-        <div class="head">
-          <h3>IMU-Driven Digital Twin</h3>
-          <a class="src" href="https://github.com/Kiyoakiiii/processing-IMU-data-in-Omniverse" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
-            GitHub
-          </a>
+        <div class="entry">
+          <div class="when">2024</div>
+          <div>
+            <h3><a href="https://github.com/Kiyoakiiii/processing-IMU-data-in-Omniverse" target="_blank" rel="noopener">IMU-Driven Digital Twin <span class="arrow">↗</span></a></h3>
+            <p class="org">Zentek · Systems Engineering Intern</p>
+            <p>An MPU6050 on a Jetson Orin Nano, fused with a Kalman filter for roll, pitch, and yaw, mirrored live into an Omniverse scene through OpenUSD and Nucleus Live sessions.</p>
+            <div class="metrics"><span><b>100</b>Hz sampling</span><span><b>&lt;2°</b>orientation error</span><span><b>&lt;100</b>ms latency</span></div>
+            <div class="tags">
+              <span class="tag">Jetson Orin</span><span class="tag">Kalman filter</span><span class="tag">Omniverse</span><span class="tag">OpenUSD</span>
+            </div>
+          </div>
         </div>
-        <p class="sub">Zentek · Systems Engineering Intern · 2024</p>
-        <p class="desc">An MPU6050 on a Jetson Orin Nano, fused with a Kalman filter for roll, pitch, and yaw, mirrored live into an Omniverse scene through OpenUSD and Nucleus Live sessions.</p>
-        <div class="nums"><span><b>100 Hz</b> sampling</span><span><b>&lt;2°</b> orientation error</span><span><b>&lt;100 ms</b> scene latency</span></div>
-        <div class="tags">
-          <span class="tag">Jetson Orin Nano</span><span class="tag">Kalman filter</span><span class="tag">I2C</span>
-          <span class="tag">Omniverse</span><span class="tag">OpenUSD</span>
+      </section>
+
+      <section id="skills">
+        <h2 class="label">Skills</h2>
+        <div class="skills">
+          <div class="skill"><h4>Robotics</h4><p>Franka Research 3, franky/libfranka, hand-eye calibration, rigid-body transforms, inverse kinematics, grasp planning, state machines, Kalman filtering</p></div>
+          <div class="skill"><h4>Perception</h4><p>PyTorch, Ultralytics YOLO, OpenCV, scikit-image, ZED SDK, Open3D, NumPy/SciPy, RANSAC/PCA</p></div>
+          <div class="skill"><h4>Software</h4><p>Python, C++, JavaScript, Bash, Linux, Git, FastAPI, asyncio, WebSockets, gRPC</p></div>
+          <div class="skill"><h4>Sim &amp; HW</h4><p>NVIDIA Omniverse Kit, OpenUSD, Jetson Orin, Onshape, SolidWorks, 3D printing</p></div>
         </div>
-      </article>
-    </section>
+      </section>
 
-    <section id="skills">
-      <h2>Skills</h2>
-      <dl class="skills">
-        <dt>Robotics</dt>
-        <dd>Franka Research 3, franky/libfranka, hand-eye calibration, rigid-body transforms, inverse kinematics, grasp planning, state machines, Kalman filtering</dd>
-        <dt>Perception</dt>
-        <dd>PyTorch, Ultralytics YOLO, OpenCV, scikit-image, ZED SDK, Open3D, NumPy/SciPy, RANSAC/PCA</dd>
-        <dt>Software</dt>
-        <dd>Python, C++, JavaScript, Bash, Linux, Git, FastAPI, asyncio, WebSockets, gRPC</dd>
-        <dt>Simulation &amp; hardware</dt>
-        <dd>NVIDIA Omniverse Kit, OpenUSD, Nucleus Live, Jetson Orin, Onshape, SolidWorks, 3D printing</dd>
-      </dl>
-    </section>
+      <section id="education">
+        <h2 class="label">Education</h2>
+        <div class="entry">
+          <div class="when">2025 —<br>Dec 2026</div>
+          <div>
+            <h3>University of California, Santa Cruz</h3>
+            <p class="org">M.S. in Electrical and Computer Engineering</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="when">— Jun 2025</div>
+          <div>
+            <h3>Shanghai University</h3>
+            <p class="org">B.E. in Electronic Information Engineering</p>
+          </div>
+        </div>
+        <p style="margin:24px 0 0"><a class="inline-link" href="files/Hanwen_Chen_CV.pdf" target="_blank" rel="noopener">View full CV ↗</a></p>
+      </section>
 
-    <section id="education">
-      <h2>Education</h2>
-      <div class="edu">
-        <div class="head"><h3>University of California, Santa Cruz</h3><span class="date">Expected Dec 2026</span></div>
-        <p class="sub">M.S. in Electrical and Computer Engineering</p>
-      </div>
-      <div class="edu">
-        <div class="head"><h3>Shanghai University</h3><span class="date">Jun 2025</span></div>
-        <p class="sub">B.E. in Electronic Information Engineering</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <span>© <span id="year">2026</span> Hanwen Chen · San Jose, CA</span>
-      <a href="mailto:kevinchen6324@gmail.com">kevinchen6324@gmail.com</a>
-    </div>
-  </footer>
+      <footer>
+        © <span id="year">2026</span> Hanwen Chen. Set in Instrument Serif and Inter, hosted on GitHub Pages.
+      </footer>
+    </main>
+  </div>
 
   <script>
   (function () {
@@ -324,65 +354,23 @@
       try { localStorage.setItem('theme', next); } catch (e) {}
     });
 
-    /* Quiet rotating seedling point cloud */
-    var cv = document.getElementById('cloud'), ctx = cv.getContext('2d');
-    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var W = 0, H = 0;
-    function rand(a, b) { return a + Math.random() * (b - a); }
-
-    var pts = [];
-    for (var i = 0; i < 360; i++) {
-      var y = rand(-0.95, 0.55), a = rand(0, 6.283), r = 0.035 * Math.sqrt(Math.random());
-      pts.push([0.07 * Math.sin((y + 1) * 1.8) + Math.cos(a) * r, y, Math.sin(a) * r]);
+    /* Highlight the section currently in view */
+    var links = document.querySelectorAll('.toc a');
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    function setActive(id) {
+      links.forEach(function (a) { a.classList.remove('active'); });
+      if (map[id]) map[id].classList.add('active');
     }
-    var tx = 0.07 * Math.sin(1.55 * 1.8), ty = 0.55;
-    function leaf(dx, dz, len, wid, droop, n) {
-      for (var j = 0; j < n; j++) {
-        var u = Math.random(), w = wid * Math.sin(Math.PI * Math.pow(u, 0.8)) * rand(-1, 1);
-        pts.push([tx + dx * u * len - dz * w, ty + u * len * 0.35 - droop * u * u + Math.abs(w) * 0.25, dz * u * len + dx * w]);
-      }
+    var sections = document.querySelectorAll('main section');
+    function onScroll() {
+      var pos = window.scrollY + window.innerHeight * 0.35, current = sections[0].id;
+      sections.forEach(function (s) { if (s.offsetTop <= pos) current = s.id; });
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = sections[sections.length - 1].id;
+      setActive(current);
     }
-    leaf(1, 0.15, 0.62, 0.17, 0.32, 420);
-    leaf(-1, -0.1, 0.58, 0.16, 0.3, 400);
-    leaf(0.2, 1, 0.32, 0.1, 0.06, 150);
-    leaf(-0.25, -1, 0.28, 0.09, 0.04, 130);
-    for (var s = 0; s < 420; s++) {
-      var f = Math.random(), px = rand(-0.38, 0.38), pz = rand(-0.38, 0.38), py = rand(-1.3, -0.95);
-      if (f < 0.6) py = -0.95; else if (f < 0.8) px = Math.random() < 0.5 ? -0.38 : 0.38; else pz = Math.random() < 0.5 ? -0.38 : 0.38;
-      pts.push([px, py, pz, 1]);
-    }
-
-    function resize() {
-      var rc = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
-      W = rc.width; H = rc.height;
-      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (reduce) draw(0);
-    }
-
-    function draw(now) {
-      var col = getComputedStyle(root).getPropertyValue('--accent').trim() || '#1f6f54';
-      var faint = getComputedStyle(root).getPropertyValue('--faint').trim() || '#8b8b93';
-      var yaw = reduce ? 0.6 : now * 0.00022, pitch = 0.3;
-      var cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-      ctx.clearRect(0, 0, W, H);
-      for (var i = 0; i < pts.length; i++) {
-        var p = pts[i];
-        var x = p[0] * cy - p[2] * sy, z = p[0] * sy + p[2] * cy;
-        var yy = (p[1] + 0.2) * cp - z * sp; z = (p[1] + 0.2) * sp + z * cp;
-        var k = 3.4 / (3.4 + z), sc = Math.min(W, H) * 0.34 * k;
-        var size = 1.6 * k * Math.max(1, W / 260);
-        ctx.globalAlpha = (p[3] ? 0.35 : 0.9) * (1.05 - (z + 1) * 0.25);
-        ctx.fillStyle = p[3] ? faint : col;
-        ctx.fillRect(W / 2 + x * sc - size / 2, H / 2 - yy * sc - H * 0.04 - size / 2, size, size);
-      }
-      ctx.globalAlpha = 1;
-      if (!reduce) requestAnimationFrame(draw);
-    }
-
-    addEventListener('resize', resize); resize();
-    if (!reduce) requestAnimationFrame(draw);
-    new MutationObserver(function () { if (reduce) draw(0); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   })();
   </script>
 </body>
